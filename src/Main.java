@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args){
-
+        ArrayList<String> domains=getDomains();
     }
 
     /**
@@ -55,10 +55,14 @@ public class Main {
     }
 
     /**
-     * This function prints the listing of VOD domains.
+     * This function prints the listing of all VOD domains.
+     * @param domains   String arraylist of all VOD domains.
      */
-    private static void list(){
-
+    private static void list(ArrayList<String> domains){
+        System.out.print("\nTwitch VOD Domains List:\n");
+        for(String s: domains){
+            System.out.print(s+"\n");
+        }
     }
 
     /**
