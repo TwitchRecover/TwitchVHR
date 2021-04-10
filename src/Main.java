@@ -22,4 +22,40 @@ public class Main {
     public static void main(String[] args){
 
     }
+
+    /**
+     * This function prints the help commands.
+     */
+    private static void help(){
+        //TODO: Create the help output when I am finished designing the program.
+    }
+
+    /**
+     * This function performs the create feature which
+     * creates a new VOD domain list.
+     */
+    private static void create(){
+
+    }
+
+    /**
+     * This function rebases an existing VOD domain list.
+     */
+    private static void rebase(){
+
+    }
+
+    /**
+     * This function updates an existing VOD domain list.
+     */
+    private static void update(){
+
+    }
+
+    /**
+     * This function prints the listing of VOD domains.
+     */
+    private static void list(){
+
+    }
 }
