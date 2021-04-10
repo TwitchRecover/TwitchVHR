@@ -15,6 +15,8 @@
  * Github repository: https://github.com/TwitchRecover/VOD-Domain-Retriever
  */
 
+import java.util.ArrayList;
+
 /**
  * Main class of the VOD retrieving program.
  */
@@ -57,5 +59,39 @@ public class Main {
      */
     private static void list(){
 
+    }
+
+    /**
+     * This retrieves all VOD domains, from both the list of
+     * known domains and new ones found from current Twitch videos.
+     * @return  ArrayList<String>   String arraylist containing the list of all Twitch VOD domains.
+     */
+    private static ArrayList<String> getDomains(){
+        ArrayList<String> domains=new ArrayList<String>();
+        domains.addAll(API.getDomains());
+        for(String s: getTwitchDomains()){
+            if(!domains.contains(s)){
+                domains.add(s);
+            }
+        }
+        return domains;
+    }
+
+    /**
+     * This function retrieves and returns all of
+     * the Twitch VOD domains retrieved from
+     * the top Twitch videos.
+     * @return ArrayList<String>    String arraylist containing a of unique Twitch VOD domain.
+     */
+    private static ArrayList<String> getTwitchDomains(){
+        ArrayList<String> domains=new ArrayList<String>();
+        for(int i=0;i<6;i++){
+            for(String s: API.getVODDomains(i*100)){
+                if(!domains.contains(s)){
+                    domains.add(s);
+                }
+            }
+        }
+        return domains;
     }
 }
