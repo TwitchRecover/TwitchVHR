@@ -19,9 +19,14 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class handles all of the API and web requests.
@@ -112,7 +117,7 @@ public class API {
      * @param offset    Integer value representing the offset of the top videos to get from, in the bounds of [0,500].
      * @return String   String value containing the entire API JSON response.
      */
-    protected static String getVods(int offset){
+    private static String getVods(int offset){
         ArrayList<String> response=new ArrayList<String>();
         try{
             CloseableHttpClient httpClient=HttpClients.createDefault();
@@ -138,5 +143,42 @@ public class API {
             //TODO: Error handling.
         }
         return String.join(", ",response);
+    }
+
+    /**
+     * This function calls the getVods function and
+     * then parses the JSON and returns the
+     * domain list of retrieved VOD domains.
+     * @param offset                Integer value representing the offset of the top videos to get from, in the bounds of [0,500].
+     * @return ArrayList<String>    String arraylist containing all of the domains retrieved from that particular query.
+     */
+    protected static ArrayList<String> getVODDomains(int offset){
+        ArrayList<String> domains=new ArrayList<String>();
+        JSONObject jO=new JSONObject(getVods(offset));
+        JSONArray vods=jO.getJSONArray("vods");
+        for(int i=0;i<vods.length();i++){
+            JSONObject vod=vods.getJSONObject(i);
+            domains.add(singleRegex("(https:\\/\\/[a-z0-9]*.cloudfront.net)\\/[a-z0-9_]*\\/storyboards\\/[0-9]*-info.json",vod.getString("seek_previews_url").toLowerCase()));
+        }
+        return domains;
+    }
+
+    /**
+     * This method computes the regex of a
+     * given value and returns the value of
+     * the first group, or if the pattern
+     * did not match the given value, it
+     * returns null.
+     * @param pattern   String value representing the regex pattern to compile.
+     * @param value     String value representing the value to apply the regex pattern to.
+     * @return String   String value representing the first regex group or null if the regex did not compile.
+     */
+    private static String singleRegex(String pattern, String value){
+        Pattern p=Pattern.compile(pattern);
+        Matcher m=p.matcher(value);
+        if(m.find()){
+            return m.group(1);
+        }
+        return null;
     }
 }
