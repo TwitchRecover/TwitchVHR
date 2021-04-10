@@ -28,8 +28,17 @@ import java.util.ArrayList;
  */
 public class API {
     //Constants:
-    private static String WEB_CI;
+    private static String CI;
     private static final int HTTP_OK=200;
+
+    /**
+     * Mutator for the WEB_CI variable which represents
+     * the client ID to use for Twitch API requests.
+     * @param Ci    String value representing the client ID to use.
+     */
+    protected static void setCI(String Ci){
+        CI=Ci;
+    }
 
     /**
      * Web requests:
@@ -63,18 +72,18 @@ public class API {
     }
 
     /**
-     * This function retrieves the web client ID of Twitch
+     * This function retrieves the client ID of Twitch
      * from a file in the Twitch Recover repository which tracks them.
      */
-    private static void retrieveWEBCI(){
+    private static void retrieveCI(){
         ArrayList<String> response=webReq("https://raw.githubusercontent.com/TwitchRecover/TwitchRecover/master/WEB_CI.txt");
         for(String s: response){
             if(!s.startsWith("#")){
-                WEB_CI=s;
+                CI=s;
                 return;
             }
         }
-        WEB_CI="kimne78kx3ncx6brgo4mv6wki5h1ko";
+        CI="kimne78kx3ncx6brgo4mv6wki5h1ko";
     }
 
     /**
@@ -109,7 +118,7 @@ public class API {
             CloseableHttpClient httpClient=HttpClients.createDefault();
             HttpGet httpGet=new HttpGet("https://api.twitch.tv/kraken/videos/top?period=week&limit=100&offset="+offset);
             httpGet.addHeader("Accept","application/vnd.twitchtv.v5+json");
-            httpGet.addHeader("Client-ID",WEB_CI);
+            httpGet.addHeader("Client-ID",CI);
             CloseableHttpResponse httpResponse=httpClient.execute(httpGet);
             if(httpResponse.getStatusLine().getStatusCode()==HTTP_OK){
                 BufferedReader br=new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
