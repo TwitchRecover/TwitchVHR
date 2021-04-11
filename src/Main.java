@@ -35,23 +35,36 @@ public class Main {
     /**
      * This function performs the create feature which
      * creates a new VOD domain list.
+     * @param domains   String arraylist representing the list of all Twitch VOD domains.
      */
-    private static void create(){
-
+    private static void create(ArrayList<String> domains){
+        ArrayList<String> formattedOutput=Format.format(domains);
+        File.write(formattedOutput);
     }
+
 
     /**
      * This function rebases an existing VOD domain list.
+     * @param domains   String arraylist representing the list of all Twitch VOD domains.
      */
-    private static void rebase(){
-
+    private static void rebase(ArrayList<String> domains){
+        create(domains);
     }
 
     /**
      * This function updates an existing VOD domain list.
+     * @param domains   String arraylist representing the list of all Twitch VOD domains.
      */
-    private static void update(){
-
+    private static void update(ArrayList<String> domains){
+        ArrayList<String> fileDomains=File.readDomains();
+        ArrayList<String> appendDomains=new ArrayList<String>();
+        for(String s: domains){
+            if(!fileDomains.contains(s)){
+                appendDomains.add(s);
+            }
+        }
+        ArrayList<String> formattedOutput=Format.formatAppend(appendDomains);
+        File.append(formattedOutput);
     }
 
     /**
