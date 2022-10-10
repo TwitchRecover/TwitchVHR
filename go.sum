@@ -6,6 +6,10 @@ github.com/TwitchRecover/TwitchGQL v0.0.0-20221010072620-72136dc91573 h1:wLF1kme
 github.com/TwitchRecover/TwitchGQL v0.0.0-20221010072620-72136dc91573/go.mod h1:DKDyEBgW0+xNYE7LfOFI7iLlS4sfG6oeWWGb8DIjx+c=
 github.com/TwitchRecover/TwitchGQL v0.0.0-20221010075954-6f627030b776 h1:8/IeoPlPYGOsPqYtcxX64g/KM39SXurKHZXXpcYjIQY=
 github.com/TwitchRecover/TwitchGQL v0.0.0-20221010075954-6f627030b776/go.mod h1:DKDyEBgW0+xNYE7LfOFI7iLlS4sfG6oeWWGb8DIjx+c=
+github.com/TwitchRecover/TwitchGQL v0.0.0-20221010230048-471e19bfc0b9 h1:oaNMvrSg1Esthadqnlknni4Dsb1B5tSTShY3BWt/3Gg=
+github.com/TwitchRecover/TwitchGQL v0.0.0-20221010230048-471e19bfc0b9/go.mod h1:DKDyEBgW0+xNYE7LfOFI7iLlS4sfG6oeWWGb8DIjx+c=
+github.com/TwitchRecover/TwitchGQL v0.0.0-20221010231844-d46780757264 h1:kbgrf5r3h0bAzvL15X3qq8aTmTVRclSAiEYTGvnz/5g=
+github.com/TwitchRecover/TwitchGQL v0.0.0-20221010231844-d46780757264/go.mod h1:DKDyEBgW0+xNYE7LfOFI7iLlS4sfG6oeWWGb8DIjx+c=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=

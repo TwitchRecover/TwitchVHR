@@ -17,7 +17,7 @@ type Options struct {
 }
 
 func Retrieve(vodIDs []int, options Options) []string {
-	client := http.Client{Timeout: time.Duration(options.Timeout)}
+	client := http.Client{Timeout: time.Duration(options.Timeout) * time.Second}
 	feedsOptions := FeedsOption{
 		AllowSource:      options.AllowSource,
 		Player:           options.Player,
