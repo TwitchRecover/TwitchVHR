@@ -3,13 +3,15 @@ package twitchvhr
 import (
 	"net/http"
 	"regexp"
+	"sync"
 )
 
 var (
 	hostRe = regexp.MustCompile(`https://([a-z0-9-]+\.[a-z]+\.[a-z]{2,3})\/`)
 )
 
-func RetrieveFeeds(vodID string, client http.Client, feedsOptions FeedsOption) []string {
+func RetrieveHosts(vodID string, client http.Client, feedsOptions FeedsOption, newHosts chan []string, wg *sync.WaitGroup) {
+	defer wg.Done()
 	hosts := make([]string, 0)
 	feedsResponse := FetchFeeds(vodID, client, feedsOptions)
 	for _, f := range feedsResponse {
@@ -18,7 +20,8 @@ func RetrieveFeeds(vodID string, client http.Client, feedsOptions FeedsOption) [
 			hosts = append(hosts, feed[1])
 		}
 	}
-	return hosts
+	newHosts <- hosts
+	return
 }
 
 func UniqueHost(hosts []string, host string) bool {
