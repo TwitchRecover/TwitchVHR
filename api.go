@@ -24,12 +24,15 @@ type FeedsOption struct {
 }
 
 func FetchFeeds(vodID string, client http.Client, options FeedsOption) []string {
+	feedUrls := make([]string, 0)
 	token := RetrieveToken(vodID, client)
 	feedOptions := "&allow_source=" + strconv.FormatBool(options.AllowSource) + "&player=" + options.Player + "&allow_spectre=" + strconv.FormatBool(options.AllowSpectre) + "&allow_audio_only=" + strconv.FormatBool(options.AllowAudioOnly) + "&playlist_include_framerate:" + strconv.FormatBool(options.IncludeFramerate)
 	feedRes, _ := client.Get("https://usher.ttvnw.net/vod/" + vodID + ".m3u8?sig=" + token.Signature + "&token=" + token.Token + feedOptions)
+	if feedRes.StatusCode != 200 {
+		return feedUrls
+	}
 	defer feedRes.Body.Close()
 	feeds, _ := io.ReadAll(feedRes.Body)
-	feedUrls := make([]string, 0)
 	scanner := bufio.NewScanner(strings.NewReader(string(feeds)))
 	for scanner.Scan() {
 		feed := scanner.Text()
