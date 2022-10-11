@@ -2,7 +2,6 @@ package twitchvhr
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -28,10 +27,8 @@ func FetchFeeds(vodID string, client http.Client, options FeedsOption) []string 
 	token := RetrieveToken(vodID, client)
 	feedOptions := "&allow_source=" + strconv.FormatBool(options.AllowSource) + "&player=" + options.Player + "&allow_spectre=" + strconv.FormatBool(options.AllowSpectre) + "&allow_audio_only=" + strconv.FormatBool(options.AllowAudioOnly) + "&playlist_include_framerate:" + strconv.FormatBool(options.IncludeFramerate)
 	feedRes, _ := client.Get("https://usher.ttvnw.net/vod/" + vodID + ".m3u8?sig=" + token.Signature + "&token=" + token.Token + feedOptions)
-	fmt.Println(feedRes.Request.URL)
 	defer feedRes.Body.Close()
 	feeds, _ := io.ReadAll(feedRes.Body)
-	fmt.Println(string(feeds))
 	feedUrls := make([]string, 0)
 	scanner := bufio.NewScanner(strings.NewReader(string(feeds)))
 	for scanner.Scan() {
@@ -51,10 +48,10 @@ func RetrieveToken(vodID string, httpClient http.Client) Token {
 	video := &twitchgql.Video{}
 	video.Request = twitchgql.VideoRequest{
 		Params:              twitchgql.VideoRequestParams{Id: id},
+		Scope:               true,
 		PlaybackAccessToken: &twitchgql.PlaybackAccessToken{Request: twitchgql.PlaybackAccessTokenRequest{Signature: true, Value: true}},
 	}
 	twitchgql.Query(client, video)
-	fmt.Println(video.Response.PlaybackAccessToken.Response.Signature)
 	return Token{
 		Signature: video.Response.PlaybackAccessToken.Response.Signature,
 		Token:     video.Response.PlaybackAccessToken.Response.Value,
