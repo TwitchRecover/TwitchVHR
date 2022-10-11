@@ -51,7 +51,6 @@ func RetrieveToken(vodID string, httpClient http.Client) Token {
 	video := &twitchgql.Video{}
 	video.Request = twitchgql.VideoRequest{
 		Params:              twitchgql.VideoRequestParams{Id: id},
-		Scope:               true,
 		PlaybackAccessToken: &twitchgql.PlaybackAccessToken{Request: twitchgql.PlaybackAccessTokenRequest{Signature: true, Value: true}},
 	}
 	twitchgql.Query(client, video)
